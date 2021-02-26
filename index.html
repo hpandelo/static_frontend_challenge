@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>Padawan Destiny</title>
+
+  <!-- 
+    ***** OBRIGADO PELA OPRTUNIDADE *****
+    PAGINA FEITA COMPLETAMENTE NA UNHA!!
+      * SEM FRAMEWORKS
+      * SEM LIBS
+      * SEM RECURSOS "MODERNOS"
+  -->
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <title>Padawan Destiny</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
   <style type="text/css">
@@ -45,11 +54,11 @@
       color: #2C97D1;
     }
     .primaryText {
-      font-size: 4rem;
+      font-size: clamp(16px, 6vw, 80px);
       line-height: 20px;
     }
     .secondaryText {
-      font-size: 25px;
+      font-size: clamp(10px, 2vw, 24px);
     }
     .startButton {
       color: #FFF;
@@ -94,6 +103,7 @@
       bottom: 0;
       text-align: center;
       width: 100%;
+      display: none;
     }
 
     #destiny-container { order: 1; }
@@ -142,13 +152,6 @@
       </div>
     </div>
   </div>
-
-  <footer>
-    <span class="footer-greeting">
-      Static file version - Vulgo.. Feito na Unha!<br />
-      Thank you for the chance! =)
-    </span>
-  </footer>
 </body>
 
 <script type="text/javascript">
