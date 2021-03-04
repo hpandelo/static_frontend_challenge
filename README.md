@@ -10,3 +10,7 @@ Just Pure HTML + CSS + JS
 
 
 _Why 2 deployments? Just to test Github Pages =)_
+
+
+**OBS* Also consider to check the branch _"enhanced"_**
+* Enhanced DEMO: https://sfc-git-enhanced-hpandelo.vercel.app/#welcome
