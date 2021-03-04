@@ -6,6 +6,8 @@
 * No Frameworks
 * No Overengineering
 
+**With Router =)**
+
 Just Pure HTML + CSS + JS
 
 
