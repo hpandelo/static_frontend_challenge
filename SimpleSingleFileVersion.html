@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Padawan Destiny</title>
+
+  <!-- 
+    ***** OBRIGADO PELA OPRTUNIDADE *****
+    PAGINA FEITA COMPLETAMENTE NA UNHA!!
+      * SEM FRAMEWORKS
+      * SEM LIBS
+      * SEM RECURSOS "MODERNOS"
+  -->
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style type="text/css">
+    * {
+      margin: 0px;
+      padding: 0px;
+      outline: none;
+      border: none;
+      text-decoration: none;
+    }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      text-align: center;
+      font-family: "Roboto", Verdana, sans-serif;
+      color: "#2C97D1";
+    }
+    header {
+      text-align: left;
+    }
+    span.backButton {
+      font-size: 24px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    span.backButton::before {
+      content: '\f1e6';
+      font-family: "Material Icons";
+      padding: 8px;
+      font-size: 20px;
+      font-weight: bolder;
+      display: inline-block;
+      vertical-align: baseline;
+    }
+    .welcomeContainer {
+      background-color: #FFF;
+    }
+    .welcomeText {
+      color: #2C97D1;
+    }
+    .primaryText {
+      font-size: clamp(16px, 6vw, 80px);
+      line-height: 20px;
+    }
+    .secondaryText {
+      font-size: clamp(10px, 2vw, 24px);
+    }
+    .startButton {
+      color: #FFF;
+      text-align: center;
+      background-color: #2C97D1;
+    }
+    .container,
+    .welcomeContainer,
+    .destinyContainer {
+      width: 100%;
+      height: 100%;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: baseline;
+    }
+    .destinyContainer > div {
+      width: 100%;
+      padding: 10px;
+    }
+    .startButton,
+    .destinyButton {
+      width: 350px;
+      height: 52px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      border: 1px solid;
+      border-radius: 8px;
+    }
+    .masterPicture {
+      width: 380px;
+      height: 380px;
+      border: none;
+      border-radius: 50%;
+    }
+    .masterInfo {
+      font-size: 24px;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      text-align: center;
+      width: 100%;
+      display: none;
+    }
+
+    #destiny-container { order: 1; }
+    #picture-container { order: 2; }
+    #info-container { order: 3; }
+
+    @media (max-width: 800px) {
+      #destiny-container { order: 3; }
+      #picture-container { order: 1; }
+      #info-container { order: 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="welcome-container" class="container welcomeContainer">
+      <div class="destinyContainer">
+        <div class="welcomeText primaryText">
+          <span>Welcome to <strong>iClinic</strong></span>
+        </div>
+        <div class="welcomeText secondaryText">
+          <span>FRONTEND CHALLENGE</span>
+        </div>
+        <div>
+          <button class="startButton" type="button" onclick="chooseDestiny()">START</button>
+        </div>
+      </div>
+  </div>
+
+  <div id="result-container" class="container">
+    <header>
+      <span onclick="openWelcome()" class="backButton">Back</span>
+    </header>
+
+    <div id="content-container" class="destinyContainer">
+      <div id="destiny-container">
+        <button id="destiny-button" class="destinyButton" type="button" onclick="chooseDestiny()">Choose your path again, Padawan</button>
+      </div>
+
+      <div id="picture-container">
+        <img id="master-picture" class="masterPicture">
+      </div>
+
+      <div id="info-container">
+        <span id="master-info" class="masterInfo"></span>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+  const $ = document.querySelector.bind(document);
+  const masterPicture = $("#master-picture");
+  const masterSpan = $("#master-info");
+
+  const containerControl = {
+    hide: function() { this.style.display = "none"; },
+    show: function() { this.style.display = "inline-block"; },
+  };
+  const welcomeContainer = Object.assign($("#welcome-container"), containerControl);
+  const resultContainer = Object.assign($("#result-container"), containerControl);
+
+  const RESOURCES = {
+    LABELS: {
+      MASTER_LABEL: "Your master is",
+    },
+    URLS: {
+      JEDI: `https://swapi.dev/api/people/1`,
+      SITH: `https://swapi.dev/api/people/4`,
+    },
+    PICTURES: {
+      JEDI: `https://especiais.ne10.uol.com.br/starwars/wp-content/uploads/2015/12/luke-300x300.png`,
+      SITH: `https://especiais.ne10.uol.com.br/starwars/wp-content/uploads/2015/12/darth_vader-300x300.png`,
+    },
+    COLORS: {
+      JEDI: {
+        PRIMARY: "#FBFE63",
+        SECONDARY: "#2A2A2A",
+      },
+      SITH: {
+        PRIMARY: "#2B2B2B",
+        SECONDARY: "#FFF",
+      }
+    }
+  };
+
+  const openWelcome = () => {
+      welcomeContainer.show();
+      resultContainer.hide();
+      $("body").style.color = "#2C97D1";
+  };
+
+  const chooseDestiny = async () => {
+      const getJedi = fetch(RESOURCES.URLS.JEDI).then(resp => resp.json());
+      const getSith = fetch(RESOURCES.URLS.SITH).then(resp => resp.json());
+
+      const result = await Promise.race([getJedi, getSith]);
+
+      const forceSide = isJedi(result) ? "JEDI" : "SITH";
+      setContent(result, forceSide);
+      welcomeContainer.hide();
+      resultContainer.show();
+  };
+
+  const isJedi = (result) => result.name === "Luke Skywalker";
+
+  const setContent = (result, side) => {
+
+    setContentColors(side);
+    setPicture(RESOURCES.PICTURES[side], result.name, masterPicture);
+    setMasterLabel(RESOURCES.LABELS.MASTER_LABEL, result.name, masterSpan);
+  };
+
+  const setContentColors = (side) => {
+    $("body").style.backgroundColor = RESOURCES.COLORS[side].PRIMARY;
+    $("body").style.color = RESOURCES.COLORS[side].SECONDARY;
+    $("#destiny-button").style.backgroundColor = RESOURCES.COLORS[side].SECONDARY;
+    $("#destiny-button").style.color = RESOURCES.COLORS[side].PRIMARY;
+  };
+
+  const setPicture = (src, alt, elementToApply) => Object.assign(elementToApply, {src, alt});
+
+  const setMasterLabel = (baseLabel, masterName, elementToApply) => Object.assign(elementToApply, {
+    innerHTML: `${baseLabel} <strong>${masterName}</strong>`,
+  });
+</script>
+</html>
